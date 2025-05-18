@@ -44,8 +44,41 @@ void print_node(Node* n){
 }
 
 int is_valid(Node* n){
+   int seen[10];
 
-    return 1;
+  //VALIDAR FILAS
+  for (int i = 0 ; i < 9; i++) {
+    memset(seen, 0, sizeof(seen));
+    for (int j = 0 ; j < 9 ; j++) {
+      int num = n->sudo[i][j];
+      if (num == 0) continue;
+      if (seen[num]) return 0;
+      seen[num] = 1;
+    }
+  }
+  //VALIDAR COLUMNAS
+  for (int j = 0 ; j < 9; j++) {
+    memset(seen, 0, sizeof(seen));
+    for (int i = 0 ; i < 9 ; i++) {
+      int num = n->sudo[i][j];
+      if (num == 0) continue;
+      if (seen[num]) return 0;
+      seen[num] = 1;
+    }
+  }
+  //VALIDAR SUBMATRICES 3X3
+  for(int k = 0 ; k < 9 ; k++){
+    memset(seen, 0, sizeof(seen));
+    for(int p = 0; p < 9; p++){
+      int i = 3*(k/3) + (p/3);
+      int j = 3*(k%3) + (p%3);
+      int num = n->sudo[i][j];
+      if(num == 0) continue;
+      if(seen[num]) return 0;
+      seen[num] = 1;
+    }
+  }
+  return 1;
 }
 
 
